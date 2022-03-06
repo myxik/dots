@@ -19,11 +19,11 @@ gaps inner 15
 gaps bottom 5
 
 # autostart
-exec --no-startup-id nitrogen --set-centered --force-setter=xinerama ~/.config/i3/ace_wallpaper.jpg
+exec --no-startup-id nitrogen --set-centered --force-setter=xinerama ~/.config/i3/tokyo_night.jpg
 exec --no-startup-id xsettingsd &
 exec --no-startup-id compton -b
 exec --no-startup-id polybar mybar -r
-exec --no-startup-id "setxkbmap -model pc105 -layout us,kz -option grp:alt_shift_toggle"
+exec --no-startup-id "setxkbmap -model pc105 -layout us,ru -option grp:alt_shift_toggle"
 
 # Menu
 bindsym $mod+d exec rofi -theme glass -show-icons -lines 6 -width 60 -location 0 -show drun -columns
@@ -199,3 +199,4 @@ focus_on_window_activation focus
 # Display image viewers and video players on 7 workspace
 assign [class=imv|mpv] 7
 for_window [class=imv|mpv] focus
+for_window [class=kitty] resize set 1200 700, move position center
