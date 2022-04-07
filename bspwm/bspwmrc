@@ -1,0 +1,88 @@
+#! /bin/sh
+
+#       ██
+#      ░██              ██████
+#      ░██       ██████░██░░░██ ███     ██ ██████████  ██████  █████
+#      ░██████  ██░░░░ ░██  ░██░░██  █ ░██░░██░░██░░██░░██░░█ ██░░░██
+#      ░██░░░██░░█████ ░██████  ░██ ███░██ ░██ ░██ ░██ ░██ ░ ░██  ░░
+#      ░██  ░██ ░░░░░██░██░░░   ░████░████ ░██ ░██ ░██ ░██   ░██   ██
+#      ░██████  ██████ ░██      ███░ ░░░██ ███ ░██ ░██░███   ░░█████
+#      ░░░░░   ░░░░░░  ░░      ░░░    ░░░ ░░░  ░░  ░░ ░░░     ░░░░░
+
+
+setxkbmap -option caps:swapescape -model pc105 -layout us &
+c() { bspc config "$@" &  }
+s() { pkill -x "$1"; { sleep 0.1; "$@" & }; }
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+
+# eww daemon &
+# Set display from arandr saved script
+# Notifications
+killall dunst
+dunst --config $HOME/.config/dunst/dunstrc &
+# Polkit
+# Wallpaper
+nitrogen --restore &
+# nitrogen --set-scaled $HOME/.wallpapers/shibuya.jpg &
+# Dex
+# dex -a -s /etc/xdg/autostart/:~/.config/autostart/  
+# Picom
+picom --experimental-backend --config $HOME/.config/picom/picom.conf &
+# Clipboard manager
+# clipmenud &
+
+# Cursor and keyb
+xsetroot -cursor_name left_ptr &
+#                             GENERAL CONFIGURATION                           #
+
+my_laptop_external_monitor=$(xrandr --query | grep 'HDMI')
+
+if [[ $my_laptop_external_monitor = *connected* ]]; then
+  $HOME/.screenlayout/dual_monitor.sh;
+  bspc monitor eDP-1 -d 1 0
+  bspc monitor HDMI-1-0 -d 2 3 4 5 6 7 8 9
+else
+  $HOME/.screenlayout/single_monitor.sh;
+  bspc monitor -d I II III IV V VI VII VIII IX X
+fi
+# bspc monitor -d I II III IV V VI VII VIII IX X 
+
+c border_width			2
+c window_gap			4
+
+#unixporn mode
+c bottom_padding		0
+# c left_padding			26
+# c right_padding			26
+c top_padding			0
+# Border
+# c focused_border_color        "#4A292B" 
+c focused_border_color        "#88241d" 
+c normal_border_color         "#101415"
+c active_border_color         "#230B52"
+c presel_feedback_color       "#4c566a"
+
+c split_ratio          0.50
+c borderless_monocle   true
+c gapless_monocle      true
+c pointer_follows_focus true
+# c focus_follows_pointer true
+c single_monocle        false
+c initial_polarity second_child
+c pointer_action2 resize_corner
+#                                  WINDOW RULES                               #
+
+# Bar
+sh $HOME/.config/polybar/launch.sh & 
+
+R mpv desktop='^6' follow=on
+R Spotify desktop='^9'
+R Gimp desktop='^7' state='floating' follow=on
+R firefox desktop='^2' 
+R discord desktop='^7'
+R Polybar manage=off
+
+s unclutter --start-hidden -idle 5
+# s borders &
