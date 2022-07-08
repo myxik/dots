@@ -1,5 +1,6 @@
 configuration {
   show-icons: false;
+  icon-theme: "Papirus-Dark";
   hide-scrollbar: true;
   lines: 1;
   columns: 4;
@@ -30,6 +31,10 @@ inputbar {
 
 element {
   padding: 12px;
+}
+
+element-icon {
+  size: 64px;
 }
 
 element-text {

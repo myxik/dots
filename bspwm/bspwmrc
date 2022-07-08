@@ -39,28 +39,28 @@ xsetroot -cursor_name left_ptr &
 
 my_laptop_external_monitor=$(xrandr --query | grep 'HDMI')
 
-if [[ $my_laptop_external_monitor = *connected* ]]; then
+if [[ $my_laptop_external_monitor = *disconnected* ]]; then
+  $HOME/.screenlayout/single_monitor.sh;
+  bspc monitor -d I II III IV V VI VII VIII IX X
+else
   $HOME/.screenlayout/dual_monitor.sh;
   bspc monitor eDP-1 -d 1 0
   bspc monitor HDMI-1-0 -d 2 3 4 5 6 7 8 9
-else
-  $HOME/.screenlayout/single_monitor.sh;
-  bspc monitor -d I II III IV V VI VII VIII IX X
 fi
 # bspc monitor -d I II III IV V VI VII VIII IX X 
 
 c border_width			2
-c window_gap			4
+c window_gap			5
 
 #unixporn mode
-c bottom_padding		0
+c bottom_padding		5
 # c left_padding			26
 # c right_padding			26
 c top_padding			0
 # Border
 # c focused_border_color        "#4A292B" 
-c focused_border_color        "#88241d" 
-c normal_border_color         "#101415"
+c focused_border_color        "#7373ff" 
+c normal_border_color         "#1e0f2c"
 c active_border_color         "#230B52"
 c presel_feedback_color       "#4c566a"
 
@@ -77,11 +77,8 @@ c pointer_action2 resize_corner
 # Bar
 sh $HOME/.config/polybar/launch.sh & 
 
-R mpv desktop='^6' follow=on
-R Spotify desktop='^9'
-R Gimp desktop='^7' state='floating' follow=on
-R firefox desktop='^2' 
-R discord desktop='^7'
+bspc rule -a mpv desktop='^7' state='fullscreen'
+
 R Polybar manage=off
 
 s unclutter --start-hidden -idle 5

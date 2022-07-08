@@ -13,7 +13,7 @@ $logout
 $sleep
 $reboot
 $shutdown" | rofi -dmenu\
-                  -no-show-icons\
+                  -i\
                   -p "Power"\
                   -font "Symbols Nerd Font 12"\
                   -width "15"\
@@ -38,7 +38,7 @@ then
 elif [ "$selected_option" == "$sleep" ]
 then
     amixer set Master mute
-    systemctl hybrid-sleep
+    systemctl suspend
 else
     echo "No match"
 fi
